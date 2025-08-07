@@ -15,7 +15,7 @@ It covers installation, running the simulator, sending commands to the turtle, a
 - [Basic Turtle Control](#basic-turtle-control)
 - [Drawing Shapes](#drawing-shapes)
     - [Circle](#circle)
-    - [Square (Manual)](#square-manual)
+    - [Triangle (Manual)](#square-manual)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
 - [Files Included](#files-included)
