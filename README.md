@@ -35,7 +35,7 @@ It covers installation, running the simulator, sending commands to the turtle, a
 ## Setup
 
 **Install ROS2 Humble Desktop:**
-```bash
+```
 sudo apt update
 sudo apt install software-properties-common
 sudo add-apt-repository universe
@@ -44,3 +44,56 @@ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 sudo apt update
 sudo apt install ros-humble-desktop
+Install turtlesim:
+sudo apt install ros-humble-turtlesim
+Source ROS2 in every terminal before running ROS2 commands:
+source /opt/ros/humble/setup.bash
+```
+## Running turtlesim
+```
+Start turtlesim node:
+ros2 run turtlesim turtlesim_node
+```
+## Basic Turtle Control
+Reset the simulation (clears the window):
+```
+ros2 service call /reset std_srvs/srv/Empty
+```
+Move turtle to center, facing right (x=5.5, y=5.5, theta=0):
+```
+ros2 service call /turtle1/teleport_absolute turtlesim/srv/TeleportAbsolute "x: 5.5
+y: 5.5
+theta: 0.0"
+```
+Set pen color, width, and state:
+```
+ros2 service call /turtle1/set_pen turtlesim/srv/SetPen "r: 255
+g: 0
+b: 0
+width: 2
+off: 0"
+```
+Move forward (single step):
+```
+ros2 topic pub -1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+```
+Rotate in place (single step):
+```
+ros2 topic pub -1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 2.0}}"
+```
+## Drawing Shapes
+# Circle
+Start a continuous circular motion (Ctrl+C to stop):
+```
+ros2 topic pub /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 1.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.5}}"
+```
+# Triangle (Manual)
+1. Move forward (side of square):
+```
+ros2 topic pub -1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+```
+2. Turn 90° left:
+```
+ros2 topic pub -1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 2.0}}"
+```
+
